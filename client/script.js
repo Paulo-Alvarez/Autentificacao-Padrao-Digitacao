@@ -12,18 +12,14 @@ passwordInput.addEventListener('keydown', (e) => {
 
   if (e.key === 'Backspace') {
     hadCorrection = true; // usuário corrigiu a senha
-    // Remove o último intervalo se houver mais de 1 elemento (mantém o zero inicial)
-    if (keyTimings.length > 1) {
-      keyTimings.pop();
+    if (keyTimings.length > 0) {
+      keyTimings.pop(); // remove o último intervalo
     }
-    lastKeyTime = now; // atualiza o tempo para que o próximo intervalo seja correto
-    return; // evita adicionar novo intervalo neste evento
+    lastKeyTime = now;
+    return;
   }
 
-  if (lastKeyTime === null) {
-    // Começo da digitação — salva 0 como primeiro tempo
-    keyTimings.push(0);
-  } else {
+  if (lastKeyTime !== null) {
     const timeDiff = now - lastKeyTime;
     keyTimings.push(timeDiff);
   }
@@ -45,8 +41,8 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify({
         username,
         password,
-        timingData: keyTimings,  // envia o array com os tempos
-        hadCorrection          // envia a flag para o back-end
+        timingData: keyTimings,
+        hadCorrection
       }),
     });
 
