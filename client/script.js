@@ -4,10 +4,21 @@ const passwordInput = document.getElementById('password');
 
 let keyTimings = [];
 let lastKeyTime = null;
+let hadCorrection = false; // flag para detectar correção
 
 // Captura o tempo entre as teclas digitadas no campo de senha
 passwordInput.addEventListener('keydown', (e) => {
   const now = Date.now();
+
+  if (e.key === 'Backspace') {
+    hadCorrection = true; // usuário corrigiu a senha
+    // Remove o último intervalo se houver mais de 1 elemento (mantém o zero inicial)
+    if (keyTimings.length > 1) {
+      keyTimings.pop();
+    }
+    lastKeyTime = now; // atualiza o tempo para que o próximo intervalo seja correto
+    return; // evita adicionar novo intervalo neste evento
+  }
 
   if (lastKeyTime === null) {
     // Começo da digitação — salva 0 como primeiro tempo
@@ -34,7 +45,8 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify({
         username,
         password,
-        timingData: keyTimings // envia o array com os tempos
+        timingData: keyTimings,  // envia o array com os tempos
+        hadCorrection          // envia a flag para o back-end
       }),
     });
 
@@ -55,7 +67,8 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = 'Erro ao conectar com o servidor.';
   }
 
-  // Limpa os dados de digitação após o envio
+  // Limpa os dados de digitação e flag após o envio
   keyTimings = [];
   lastKeyTime = null;
+  hadCorrection = false;
 });
