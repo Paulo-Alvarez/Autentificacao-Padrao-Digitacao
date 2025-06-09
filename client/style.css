@@ -8,7 +8,9 @@
 /* Fonte e plano de fundo */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: 
+    url('images/fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
   height: 100vh;
   display: flex;
   align-items: center;
