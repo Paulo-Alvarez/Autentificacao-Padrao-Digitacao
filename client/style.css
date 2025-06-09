@@ -1,0 +1,149 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fonte e plano de fundo */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* Container central */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Caixa de login */
+.login-box {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 40px 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-box h2 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #00d8ff;
+}
+
+.login-box .subtitle {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Estilo dos inputs */
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+/* Botão */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00d8ff;
+  border: none;
+  border-radius: 8px;
+  color: #0f2027;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #00b6d6;
+}
+
+/* Status */
+.status-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #ffdd57;
+}
+
+.password-container {
+  display: flex;
+  flex-direction: column;  /* Alinha verticalmente os filhos (input e botão) */
+  align-items: center;     /* Centraliza o botão horizontalmente */
+  margin-bottom: 12px;     /* Espaço entre este grupo e o próximo campo */
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Botão do olho */
+.toggle-pass {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #888;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.toggle-pass:hover {
+  color: #00d8ff;
+}
+
+.link-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.btn-voltar {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-voltar:hover {
+  background-color: #0056b3;
+}
