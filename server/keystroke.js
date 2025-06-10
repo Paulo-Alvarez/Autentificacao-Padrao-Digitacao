@@ -1,5 +1,6 @@
 const TOLERANCE_PER_KEY = 300; // ms
 const MAX_DEVIATIONS_ALLOWED = 3;
+const THRESHOLD = 500; // distância máxima permitida (ajuste conforme necessário)
 
 function calculateAverageProfile(keystrokeSamples) {
   if (!keystrokeSamples || keystrokeSamples.length === 0) return [];
@@ -17,6 +18,18 @@ function calculateAverageProfile(keystrokeSamples) {
   }
 
   return avgProfile;
+}
+
+function calculateDistance(currentTimings, avgProfile) {
+  if (currentTimings.length !== avgProfile.length) return Infinity;
+
+  let total = 0;
+  for (let i = 0; i < currentTimings.length; i++) {
+    const diff = currentTimings[i] - avgProfile[i];
+    total += diff * diff;
+  }
+
+  return Math.sqrt(total);
 }
 
 function compareKeystrokeDetailed(currentTimings, keystrokeSamples) {
@@ -40,8 +53,7 @@ function compareKeystrokeDetailed(currentTimings, keystrokeSamples) {
   }
 
   const accepted = deviations <= MAX_DEVIATIONS_ALLOWED;
-
-  let reason = accepted ? 'Comportamento aceito.' : `Número de desvios acima do limite: ${deviations}`;
+  const reason = accepted ? 'Comportamento aceito.' : `Número de desvios acima do limite: ${deviations}`;
 
   return {
     accepted,
@@ -54,4 +66,9 @@ function compareKeystrokeDetailed(currentTimings, keystrokeSamples) {
   };
 }
 
-module.exports = { compareKeystrokeDetailed };
+module.exports = {
+  compareKeystrokeDetailed,
+  calculateAverageProfile,
+  calculateDistance,
+  THRESHOLD,
+};

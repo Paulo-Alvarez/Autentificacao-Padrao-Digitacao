@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { compareKeystrokeDetailed, calculateDistance, THRESHOLD } = require('./keystroke'); 
+const { compareKeystrokeDetailed, calculateDistance, THRESHOLD } = require('./keystroke');
 const fs = require('fs');
 const path = require('path');
 
@@ -25,7 +25,7 @@ function averageTimings(samples) {
   const len = samples[0].length;
   const avg = Array(len).fill(0);
   samples.forEach(sample => {
-    for(let i=0; i<len; i++) {
+    for (let i = 0; i < len; i++) {
       avg[i] += sample[i];
     }
   });
@@ -73,7 +73,6 @@ async function authenticateUser(username, password, timingData, hadCorrection, u
   console.log("Comparando timing data:");
   console.log("Digitado agora:", timingData);
 
-  // Verifica se o tamanho do timingData é o esperado (igual ao tamanho da primeira amostra salva)
   const expectedLength = user.keystrokeSamples[0].length;
   if (timingData.length !== expectedLength) {
     const msg = `Tamanho dos dados diferente do esperado. Esperado: ${expectedLength}, recebido: ${timingData.length}`;
@@ -84,10 +83,15 @@ async function authenticateUser(username, password, timingData, hadCorrection, u
   const avgTimings = averageTimings(user.keystrokeSamples);
   console.log("Média das amostras salvas:", avgTimings);
 
-  if (typeof calculateDistance === 'function') {
-    const dist = calculateDistance(timingData, avgTimings);
-    console.log(`Distância da amostra atual para a média: ${dist.toFixed(3)}`);
-    console.log(`Limite permitido (threshold): ${THRESHOLD}`);
+  const dist = calculateDistance(timingData, avgTimings);
+  console.log(`Distância da amostra atual para a média: ${dist.toFixed(3)}`);
+  console.log(`Limite permitido (threshold): ${THRESHOLD}`);
+
+  if (dist > THRESHOLD * 2) {
+    return {
+      success: false,
+      message: `Diferença de digitação muito grande. Acesso negado. (Distância: ${dist.toFixed(3)})`
+    };
   }
 
   const result = compareKeystrokeDetailed(timingData, user.keystrokeSamples);
