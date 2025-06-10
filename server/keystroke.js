@@ -33,8 +33,11 @@ function calculateDistance(currentTimings, avgProfile) {
 }
 
 function compareKeystrokeDetailed(currentTimings, keystrokeSamples) {
-  if (!keystrokeSamples || keystrokeSamples.length === 0) return { accepted: false, reason: 'Sem amostras salvas.' };
+  if (!keystrokeSamples || keystrokeSamples.length === 0) 
+    return { accepted: false, reason: 'Sem amostras salvas.' };
+
   const sampleLength = keystrokeSamples[0].length;
+
   if (currentTimings.length !== sampleLength) {
     return { accepted: false, reason: 'Tamanho dos dados diferente do esperado.' };
   }
@@ -47,6 +50,14 @@ function compareKeystrokeDetailed(currentTimings, keystrokeSamples) {
   for (let i = 0; i < sampleLength; i++) {
     const diff = Math.abs(currentTimings[i] - avgProfile[i]);
     differences.push(diff);
+
+    if (diff > THRESHOLD) {
+      return {
+        accepted: false,
+        reason: `Desvio no índice ${i} excede limite máximo (${diff.toFixed(2)}ms > ${THRESHOLD}ms).`
+      };
+    }
+
     if (diff > TOLERANCE_PER_KEY) {
       deviations++;
     }
