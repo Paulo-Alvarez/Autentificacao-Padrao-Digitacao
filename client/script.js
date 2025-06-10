@@ -35,7 +35,7 @@ form.addEventListener('submit', async (e) => {
   const password = passwordInput.value;
 
   try {
-    const res = await fetch('https://autentificador-api.onrender.com/register', {
+    const res = await fetch('https://autentificador-api.onrender.com/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
